@@ -1,36 +1,218 @@
-body { font-family: sans-serif; margin: 20px; background-color: #f4f4f4; color: #333; }
-        .container { max-width: 700px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h1 { text-align: center; color: #333; }
-        label { display: block; margin-top: 15px; margin-bottom: 5px; font-weight: bold; }
-        input[type="number"] { width: 80px; padding: 10px; margin-right:10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
-        textarea { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; resize: vertical; min-height: 80px;}
-        .controls-group { display: flex; align-items: center; margin-top: 20px; flex-wrap: wrap; }
-        .controls-group button { margin-left:0; } /* Init button specific */
-        .action-buttons { text-align: center; margin-top:10px; } /* For Encrypt/Decrypt */
-        button {
-            padding: 10px 15px; /* Etwas kleiner für mehr Buttons */
-            margin: 5px;
-            cursor: pointer;
-            background-color: #007bff; /* Blauer Standard für Init */
-            color: white;
-            border: none;
-            border-radius: 4px;
-            transition: background-color 0.3s ease;
-        }
-        button:hover { background-color: #0056b3; }
-        button:disabled { background-color: #cccccc; cursor: not-allowed; }
-        button.encrypt { background-color: #5cb85c; }
-        button.encrypt:hover:not(:disabled) { background-color: #4cae4c; }
-        button.decrypt { background-color: #f0ad4e; }
-        button.decrypt:hover:not(:disabled) { background-color: #eea236; }
+/* style.css */
+body {
+    font-family: sans-serif;
+    margin: 0; /* Entfernt äußeren Rand für bessere mobile Darstellung */
+    padding: 10px; /* Fügt inneren Abstand hinzu */
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6; /* Verbessert Lesbarkeit */
+}
 
-        #progressContainer { margin-top: 10px; margin-bottom:10px; }
-        #initProgress { width: 100%; }
-        #progressText { display: block; text-align: center; font-size:0.9em; }
+.container {
+    width: 100%; /* Nutzt volle Breite auf kleinen Bildschirmen */
+    max-width: 700px; /* Maximale Breite für größere Bildschirme */
+    margin: 10px auto; /* Zentriert und fügt etwas vertikalen Abstand hinzu */
+    background: white;
+    padding: 15px; /* Flexibles Padding */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-sizing: border-box; /* Padding und Border werden in width/height einberechnet */
+}
 
-        #messages { margin-top: 15px; padding: 10px; border-radius: 4px; text-align: center; min-height: 20px; }
-        .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;}
-        .info { background-color: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb;} /* Helleres Blau für Info */
-        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb;}
-        .warning { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
-    
+h1 {
+    text-align: center;
+    color: #333;
+    font-size: 1.8em; /* Relative Schriftgröße */
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="number"] {
+    /* width: 80px; // Feste Breite wird flexibler */
+    flex-basis: 80px; /* Basisbreite für Flex-Item */
+    flex-grow: 0.5;   /* Kann etwas wachsen */
+    min-width: 70px;  /* Mindestbreite, um nicht zu klein zu werden */
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    resize: vertical;
+    min-height: 100px; /* Etwas mehr Höhe standardmäßig */
+}
+
+.controls-group {
+    display: flex;
+    align-items: center; /* Vertikale Ausrichtung */
+    margin-top: 20px;
+    flex-wrap: wrap; /* Erlaubt Umbruch bei Platzmangel */
+    gap: 10px; /* Abstand zwischen den Elementen in der Gruppe */
+}
+
+.controls-group label {
+    margin-bottom: 0; /* Weniger Abstand, da oft in einer Zeile mit Input */
+    margin-top: 0;
+    white-space: nowrap; /* Verhindert Umbruch im Label-Text selbst */
+    flex-shrink: 0; /* Label soll nicht schrumpfen */
+}
+
+.controls-group button {
+    margin-left: 0; /* Spezifisches Styling für Init-Button in Gruppe */
+    flex-grow: 1;   /* Button kann wachsen, um Platz zu füllen */
+    min-width: 150px; /* Mindestbreite für den Initialisierungsbutton */
+}
+
+.action-buttons {
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column; /* Buttons standardmäßig untereinander */
+    gap: 10px; /* Abstand zwischen den Buttons */
+}
+
+.action-buttons button {
+    width: 100%; /* Volle Breite für bessere Klickbarkeit auf Mobilgeräten */
+    margin: 0; /* Überschreibt generelles Button-Margin */
+}
+
+button {
+    padding: 12px 15px; /* Angepasstes Padding für bessere Klickflächen */
+    margin: 5px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    font-size: 1em; /* Relative Schriftgröße */
+    line-height: 1.2; /* Für besseres Text-Rendering im Button */
+}
+
+button:hover:not(:disabled) { background-color: #0056b3; }
+button:disabled { background-color: #cccccc; cursor: not-allowed; opacity: 0.7; }
+button.encrypt { background-color: #5cb85c; }
+button.encrypt:hover:not(:disabled) { background-color: #4cae4c; }
+button.decrypt { background-color: #f0ad4e; }
+button.decrypt:hover:not(:disabled) { background-color: #eea236; }
+
+#progressContainer {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+#initProgress {
+    width: 100%;
+    height: 12px; /* Etwas dicker für bessere Sichtbarkeit */
+}
+
+#progressText {
+    display: block;
+    text-align: center;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+#messages {
+    margin-top: 20px;
+    padding: 12px;
+    border-radius: 4px;
+    text-align: center;
+    min-height: 20px;
+    word-wrap: break-word; /* Lange Nachrichten umbrechen */
+}
+
+.error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;}
+.info { background-color: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb;}
+.success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb;}
+.warning { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+
+/* ----- Media Queries für Responsivität ----- */
+
+/* Für Tablets und größere Mobilgeräte im Querformat */
+@media (min-width: 601px) {
+    .action-buttons {
+        flex-direction: row; /* Buttons nebeneinander, wenn genug Platz */
+        justify-content: center; /* Zentriert die Buttons in der Reihe */
+    }
+    .action-buttons button {
+        width: auto; /* Breite an Inhalt anpassen */
+        min-width: 150px; /* Mindestbreite pro Button */
+    }
+}
+
+
+/* Für kleinere Mobilgeräte (z.B. Smartphones im Hochformat) */
+@media (max-width: 600px) {
+    body {
+        padding: 5px; /* Weniger äußerer Abstand */
+    }
+    .container {
+        padding: 10px; /* Weniger innerer Abstand */
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    h1 {
+        font-size: 1.5em; /* Kleinere Überschrift */
+    }
+
+    .controls-group {
+        flex-direction: column; /* Elemente untereinander anordnen */
+        align-items: stretch; /* Elemente auf volle Breite strecken */
+    }
+    .controls-group label {
+        margin-bottom: 5px; /* Normaler Abstand, da jetzt eigene Zeile */
+        text-align: left; /* Standardausrichtung */
+    }
+    input[type="number"] {
+        width: 100%; /* Volle Breite für den Input */
+        margin-right: 0;
+        margin-bottom: 10px; /* Abstand zum nächsten Element */
+        flex-basis: auto; /* Flex-Basis zurücksetzen */
+    }
+    .controls-group button {
+        width: 100%; /* Volle Breite für den Button */
+        margin-left: 0;
+        min-width: unset; /* Mindestbreite aufheben */
+    }
+
+    textarea {
+        min-height: 80px;
+    }
+
+    /* Hinweistext am Ende kleiner machen */
+    p[style*="font-size:0.8em"] {
+        font-size: 0.75em !important; /* Wichtig, um Inline-Style zu überschreiben */
+    }
+}
+
+/* Für sehr kleine Bildschirme */
+@media (max-width: 360px) {
+    h1 {
+        font-size: 1.3em;
+    }
+    button {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+    label {
+        font-size: 0.9em;
+    }
+    textarea {
+        min-height: 70px;
+    }
+}
