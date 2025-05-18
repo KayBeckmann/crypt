@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Text Verschlüsselung/Entschlüsselung (Gebilde-Modell V3.1)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Text Verschlüsselung/Entschlüsselung (Gebilde-Modell V3.1)</h1>
+
+        <div class="controls-group">
+            <label for="dimensions" style="margin-right:5px;">Dimension (N):</label>
+            <input type="number" id="dimensions" value="2" min="1" max="4"> <button id="initHypercubeBtn" onclick="handleInitializeHypercube()">Hypercube Initialisieren</button>
+        </div>
+        <div id="progressContainer" style="display: none;">
+            <label for="initProgress" style="font-size:0.9em;">Initialisierungsfortschritt:</label>
+            <progress id="initProgress" value="0" max="100"></progress>
+            <span id="progressText">0%</span>
+        </div>
+
+        <div>
+            <label for="inputText">Eingabetext:</label>
+            <textarea id="inputText" rows="5" placeholder="Text hier eingeben..."></textarea>
+        </div>
+
+        <div class="action-buttons">
+            <button id="encryptBtn" class="encrypt" onclick="processText(true)">Verschlüsseln</button>
+            <button id="decryptBtn" class="decrypt" onclick="processText(false)">Entschlüsseln</button>
+        </div>
+
+        <div class="output-area">
+            <label for="outputText">Ausgabetext:</label>
+            <textarea id="outputText" rows="5" readonly></textarea>
+        </div>
+
+        <div id="messages"></div>
+        <p style="font-size:0.8em; text-align:center; margin-top:15px;">
+            Das "Gebilde" wird mit ASCII-Zeichen 32-126 gefüllt. Für jedes dieser Zeichen werden bis zu 
+            <span id="kAlternativesDisplay">50</span> verschiedene Koordinaten-Sets gesammelt.
+            Max. empfohlene Dimension N=4 (Initialisierung kann einige Sekunden dauern).
+        </p>
+    </div>
+
+    <script src="javascript.js"></script>
+</body>
+</html>
