@@ -3,7 +3,7 @@
             CHARSET_S.push(String.fromCharCode(i));
         }
         const K_ALTERNATIVES_PER_CHAR = 50; 
-        const N_MAX_DIMENSION_ALLOWED = 4; // Harte Grenze für N
+        const N_MAX_DIMENSION_ALLOWED = 10; // Harte Grenze für N
 
         let limitedCoordsMap = {}; 
         let cacheDimension = 0; 
